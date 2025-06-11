@@ -1,6 +1,6 @@
 <template>
-    <main class="max-w-6xl mx-auto p-2 sm:p-3 w-full">
-        <article v-if="store.error" class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4" role="alert">
+    <main class="max-w-6xl mx-auto w-full mt-4">
+        <article v-if="store.error" class="bg-red-100 border border-red-400 text-red-700 rounded" role="alert">
             <h2 class="font-bold">Error!</h2>
             <p>{{ store.error }}</p>
         </article>
@@ -13,10 +13,10 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                 </path>
             </svg>
-            <p class="mt-2 text-gray-600">Loading news articles...</p>
+            <p class="text-gray-600">Loading news articles... this could take a minute</p>
         </section>
 
-        <ul v-else class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2 sm:gap-3">
+        <ul v-else class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-4">
             <li v-for="(article, index) in store.articles" :key="index">
                 <ArticleCard :article="article" :index="index" />
             </li>

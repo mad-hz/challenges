@@ -11,32 +11,41 @@ export const store = reactive({
 
         try {
             const API_KEY = 'acb7404e1ba14c258ab41ac7aabf50ff';
-            const targetUrl = `https://newsapi.org/v2/everything?q=bmw&sortBy=publishedAt&apiKey=${API_KEY}`;
-            const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
 
-            const response = await fetch(proxyUrl);
+            const requests = [
+                `https://newsapi.org/v2/everything?q=bmw&sortBy=publishedAt&apiKey=${API_KEY}`,
+                `https://newsapi.org/v2/everything?q=apple&from=2025-06-10&to=2025-06-10&sortBy=popularity&apiKey=${API_KEY}`,
+            ].map(url =>
+                fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(url))
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
+                        return response.json();
+                    })
+            );
 
-            if (!response.ok) {
-                throw new Error(`News fetch failed: ${response.status}`);
-            }
+            const responses = await Promise.all(requests);
 
-            const data = await response.json();
+            const allArticles = responses.flatMap(response =>
+                response.status === 'ok' ? response.articles : []
+            );
 
-            if (data.status !== 'ok' || !data.articles.length) {
+            if (!allArticles.length) {
                 throw new Error('No news articles available');
             }
 
-            this.articles = data.articles.map(article => ({
+            this.articles = allArticles.map(article => ({
                 ...article,
                 safeImageUrl: this.getSafeImageUrl(article.urlToImage),
                 imageLoaded: false
             }));
+
         } catch (err) {
             this.error = err.message;
         } finally {
             this.isLoading = false;
         }
     },
+
 
     getSafeImageUrl(originalUrl) {
         if (!originalUrl) return 'https://picsum.photos/800/450';

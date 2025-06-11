@@ -1,5 +1,5 @@
 <template>
-    <article class="bg-white rounded-md shadow-md hover:shadow-lg transition-all h-full">
+    <article class="bg-white rounded-md shadow-md hover:shadow-lg transition-all h-full m-2">
         <router-link :to="{ name: 'article', params: { index } }" class="block h-full no-underline hover:no-underline">
             <figure class="aspect-video overflow-hidden rounded-t-md relative bg-gray-200">
                 <img class="w-full h-full object-cover transition-opacity duration-300"

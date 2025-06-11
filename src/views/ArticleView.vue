@@ -26,7 +26,7 @@
                 </footer>
             </header>
 
-            <section class="text-gray-700 mb-8">
+            <section class="text-gray-700">
                 <p class="text-lg font-medium mb-4">{{ article.description }}</p>
                 <p v-if="article.content" class="mb-4">{{ article.content.replace(/\[\+\d+ chars\]$/, '') }}</p>
             </section>
@@ -56,7 +56,7 @@
 
         <section v-else class="text-center py-8">
             <p class="text-red-500">Article not found</p>
-            <router-link to="/" class="mt-4 text-blue-600 hover:text-blue-800">Back to home</router-link>
+            <router-link to="/" class="mt-2 text-blue-600 hover:text-blue-800">Back to home</router-link>
         </section>
     </main>
 </template>
